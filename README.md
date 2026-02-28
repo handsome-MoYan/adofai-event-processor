@@ -1,0 +1,75 @@
+# ADOFAI Event Processor v4.4.0
+
+冰与火之舞（A Dance of Fire and Ice）事件处理工具
+
+专为处理 ADOFAI 关卡文件设计，可高效地筛选、修改和清理事件数据。
+
+![版本](https://img.shields.io/badge/版本-4.4.0-blue)
+![ADOFAI版本](https://img.shields.io/badge/ADOFAI-v2.9.8-green)
+![Python](https://img.shields.io/badge/Python-3.13-orange)
+![许可证](https://img.shields.io/badge/许可证-MIT-yellow)
+
+---
+
+## 目录
+
+- [功能特性](#-功能特性)
+- [下载安装](#-下载安装)
+- [基本工作流程]()
+- [界面概览]()
+- [处理模式详解]()
+- [工具箱功能]()
+- [快捷键一览]()
+- [使用预设]()
+- [预览功能]()
+- [进阶技巧]()
+- [常见问题]()
+- [技术细节]()
+- [许可证]()
+
+#### (具体细节前往./adofai_ep/gui/locales/中查看)
+
+---
+
+## 功能特性
+
+### 核心功能
+- **智能事件处理**：删除/提取/替换 ADOFAI 谱面事件（6种处理模式）
+- **正则表达式支持**：复杂模式匹配，支持忽略大小写
+- **自动编码检测**：支持 UTF-8、UTF-8-SIG、GBK、Shift-JIS、ASCII
+- **拖拽支持**：直接将 `.adofai` 文件拖入窗口
+
+### 工具箱功能
+- **智能清理**：删除未使用的装饰物和空的 MoveDecorations 事件
+- **VFX制作**：生成用于视频录制的前景/背景分离版本
+- **预设组管理**：批量应用多个预设规则
+
+### 用户体验
+- **多语言支持**：简体中文、英文、日文、韩文、喵喵语、命令行语
+- **23种视觉主题**：宇宙、暗黑、赛博等风格
+- **实时预览**：处理前预览结果，支持编辑和搜索
+- **完整快捷键**：全面的键盘操作支持
+
+---
+
+## 下载安装
+
+### Windows 用户
+
+1. 前往 [Releases](https://github.com/handsome-MoYan/adofai-event-processor/releases) 下载最新版本
+2. 解压 `ADOFAI_Event_Processor_v4.4.0_Windows.zip`
+3. 运行 `ADOFAI_Event_Processor.exe`
+4. **无需安装 Python 或其他依赖**
+
+### 从源码运行
+
+```bash
+# 克隆仓库
+git clone https://github.com/handsome-MoYan/adofai-event-processor.git
+cd adofai-event-processor
+
+# 安装依赖
+pip install -e .
+
+# 运行
+python -m adofai_ep.main
