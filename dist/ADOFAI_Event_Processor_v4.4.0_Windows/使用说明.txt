@@ -1,0 +1,28 @@
+ADOFAI Event Processor v4.4.0
+冰与火之舞事件处理工具
+作者: NeoMoyelle
+邮箱: handsomemoyan@outlook.com
+
+【使用方法】
+1. 直接运行 ADOFAI_Event_Processor.exe
+2. 点击"浏览..."选择 .adofai 谱面文件
+3. 或使用拖拽功能将文件拖入程序窗口
+4. 选择处理模式和关键词，点击"开始处理"
+
+【快捷键】
+Ctrl+O      - 打开文件
+Ctrl+S      - 选择输出目录
+Ctrl+Shift+S - 自动填充输出目录
+Ctrl+P      - 预览处理结果
+Ctrl+Shift+P - 开始处理
+Ctrl+Enter  - 添加主关键词
+Shift+Enter - 添加子关键词
+Delete      - 删除选中项
+Ctrl+Delete - 清空所有
+F12         - 调试窗口
+
+【配置文件】
+首次运行后会自动生成 adofai_ep_config.json
+
+【GitHub】
+https://github.com/NeoMoyelle/adofai-event-processor

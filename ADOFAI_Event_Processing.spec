@@ -1,9 +1,10 @@
 # -*- mode: python ; coding: utf-8 -*-
 from pathlib import Path
 import sys
+import os
 
-# 项目根目录
-ROOT = Path(SPECDIR) / "adofai_ep"
+# 获取当前工作目录（spec 文件所在目录）
+ROOT = Path(os.getcwd()) / "adofai_ep"
 
 block_cipher = None
 
@@ -43,6 +44,11 @@ a = Analysis(
         'debug_window',
         'preview_window',
         'toolbox_ui',
+        'PIL',
+        'PIL.Image',
+        'PIL.ImageTk',
+        'PIL.ImageDraw',
+        'PIL.ImageFont',
     ],
     hookspath=[],
     hooksconfig={},
@@ -52,7 +58,6 @@ a = Analysis(
         'numpy',
         'pandas',
         'scipy',
-        'PIL',
         'PyQt5',
         'PyQt6',
         'PySide2',

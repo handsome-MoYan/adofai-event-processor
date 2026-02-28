@@ -1,0 +1,11 @@
+{
+  "encoding": "utf-8-sig",
+  "turbo": false,
+  "theme": "cosmo",
+  "lang": "zh_CN",
+  "max_history": 10,
+  "console": true,
+  "save_log": false,
+  "check_presets_on_startup": true,
+  "debug": false
+}
