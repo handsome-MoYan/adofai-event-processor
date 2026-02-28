@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ADOFAI Event Processor - User Guide</title>
+<style>
+  body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin:40px auto; max-width:900px; line-height:1.6; color:#333}
+  h1{color:#007acc; border-bottom:2px solid #007acc; padding-bottom:10px}
+  h2{color:#005a9e; margin-top:30px; border-left:4px solid #007acc; padding-left:10px}
+  h3{color:#444; margin-top:25px}
+  code{background:#f4f4f4; padding:2px 6px; border-radius:3px; font-family:Consolas, "Courier New", monospace; font-size:0.9em}
+  pre{background:#f8f8f8; padding:15px; border-radius:5px; overflow-x:auto; border-left:3px solid #007acc}
+  kbd{background:#eee; border:1px solid #ccc; border-radius:3px; padding:2px 6px; font-family:monospace; font-size:0.85em}
+  table{border-collapse:collapse; width:100%; margin:15px 0}
+  th,td{border:1px solid #ddd; padding:10px; text-align:left}
+  th{background:#007acc; color:white}
+  tr:nth-child(even){background:#f9f9f9}
+  .tip{background:#e7f3ff; border-left:4px solid #007acc; padding:12px; margin:15px 0; border-radius:0 5px 5px 0}
+  .warning{background:#fff3cd; border-left:4px solid #ffc107; padding:12px; margin:15px 0; border-radius:0 5px 5px 0}
+  .note{background:#d4edda; border-left:4px solid #28a745; padding:12px; margin:15px 0; border-radius:0 5px 5px 0}
+  ul,ol{margin:10px 0; padding-left:25px}
+  li{margin:5px 0}
+</style>
+</head>
+<body>
+<h1>ADOFAI Event Processor - User Guide</h1>
+<p><strong>Version:</strong> 4.4.0 | <strong>For ADOFAI:</strong> v2.9.8 | (Generally backward compatible)</p>
+
+<div class="tip">
+<strong>Tip:</strong> This tool is designed for processing <em>A Dance of Fire and Ice</em> level files, enabling efficient filtering, modification, and cleanup of event data.
+</div>
+
+<h2>Table of Contents</h2>
+<ol>
+  <li><a href="#basic-workflow">Basic Workflow</a></li>
+  <li><a href="#interface-overview">Interface Overview</a></li>
+  <li><a href="#processing-modes">Processing Modes</a></li>
+  <li><a href="#toolbox">Toolbox Features</a></li>
+  <li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+  <li><a href="#presets">Using Presets</a></li>
+  <li><a href="#preview">Preview Feature</a></li>
+  <li><a href="#advanced-tips">Advanced Tips</a></li>
+  <li><a href="#troubleshooting">Troubleshooting</a></li>
+  <li><a href="#technical">Technical Details</a></li>
+</ol>
+
+<h2 id="basic-workflow">1. Basic Workflow</h2>
+
+<h3>Step-by-Step Guide</h3>
+<ol>
+  <li><strong>Select Input File:</strong> Click <kbd>Browse…</kbd> or drag a <code>.adofai</code> / <code>.txt</code> file into the window.
+    <ul>
+      <li>Supported formats: <code>.adofai</code>, <code>.txt</code>, <code>.json</code></li>
+      <li>Auto-detects encoding (UTF-8, UTF-8-SIG, GBK, Shift-JIS, ASCII)</li>
+    </ul>
+  </li>
+  <li><strong>Set Output Directory:</strong> Click <kbd>Auto Fill</kbd> to use the input directory, or browse to select another location.</li>
+  <li><strong>Specify Output Filename:</strong> Enter a filename (without extension), or leave blank for <code>original_new.adofai</code>.</li>
+  <li><strong>Add Filter Conditions:</strong> Use the keyword tree to add main keywords or sub-keywords (regex supported).
+    <ul>
+      <li><strong>Main Keywords:</strong> Primary search conditions (OR logic within same branch)</li>
+      <li><strong>Sub Keywords:</strong> Additional conditions (AND logic with parent)</li>
+    </ul>
+  </li>
+  <li><strong>Select Processing Mode:</strong> Choose from 6 modes (see <a href="#processing-modes">Processing Modes</a>).</li>
+  <li><strong>Start Processing:</strong> Click <kbd>Start Processing</kbd> or press <kbd>Ctrl+Shift+P</kbd>.</li>
+</ol>
+
+<div class="note">
+<strong>Note:</strong> If the output file already exists, the tool automatically creates a unique filename (e.g., <code>filename(1).adofai</code>).
+</div>
+
+<h2 id="interface-overview">2. Interface Overview</h2>
+
+<h3>Main Tab - Event Processing</h3>
+<table>
+  <tr><th>Component</th><th>Description</th></tr>
+  <tr><td>Language Selector</td><td>Switch between supported languages</td></tr>
+  <tr><td>Theme Selector</td><td>Choose from 23 visual themes (Cosmo, Darkly, Cyborg, etc.)</td></tr>
+  <tr><td>Encoding Dropdown</td><td>Manually select encoding or use auto-detection</td></tr>
+  <tr><td>Preset Combo Box</td><td>Load predefined rules from presets.json</td></tr>
+  <tr><td>Keyword Tree</td><td>Visual hierarchy of main/sub keywords with checkboxes</td></tr>
+  <tr><td>Mode Selection</td><td>How the filter applies to input files</td></tr>
+  <tr><td>Options Bar</td><td>Toggles for regex, case-insensitive, and turbo mode</td></tr>
+  <tr><td>Replace Text Box</td><td>Replacement content for modify/replace modes</td></tr>
+</table>
+
+<h3>Toolbox Tab</h3>
+<p>Provides specialized tools for ADOFAI files:</p>
+<ul>
+  <li><strong>Smart Cleanup:</strong> Remove unused decorations and empty move events</li>
+  <li><strong>VFX Maker:</strong> Generate foreground/background versions for video recording</li>
+  <li><strong>Preset Groups:</strong> Batch apply multiple presets</li>
+</ul>
+
+<h2 id="processing-modes">3. Processing Modes</h2>
+
+<table>
+  <tr><th>Mode</th><th>Description</th><th>Use Case</th></tr>
+  <tr>
+    <td><strong>Delete lines containing any keyword</strong></td>
+    <td>Remove lines matching at least one main keyword (OR logic within branch)</td>
+    <td>Quickly remove specific event types</td>
+  </tr>
+  <tr>
+    <td><strong>Extract lines containing any keyword</strong></td>
+    <td>Keep only lines matching at least one main keyword</td>
+    <td>Isolate specific events for analysis</td>
+  </tr>
+  <tr>
+    <td><strong>Delete lines containing all keywords</strong></td>
+    <td>Remove lines matching all main keywords AND their sub-keywords</td>
+    <td>Multi-condition precise deletion</td>
+  </tr>
+  <tr>
+    <td><strong>Extract lines containing all keywords</strong></td>
+    <td>Keep only lines matching all main keywords AND their sub-keywords</td>
+    <td>Extract highly specific events</td>
+  </tr>
+  <tr>
+    <td><strong>Modify lines containing any keyword</strong></td>
+    <td>Replace entire matching lines with specified text</td>
+    <td>Batch replace event parameters</td>
+  </tr>
+  <tr>
+    <td><strong>Replace substring in matching lines</strong></td>
+    <td>Find and replace text within matching lines (not whole line)</td>
+    <td>Update specific values while preserving structure</td>
+  </tr>
+</table>
+
+<div class="warning">
+<strong>Important:</strong> Sub-keywords form AND logic with their parent main keyword. Different main keywords form OR logic with each other.
+</div>
+
+<h2 id="toolbox">4. Toolbox Features</h2>
+
+<h3>4.1 Smart Cleanup</h3>
+<p>Automatically clean common issues in ADOFAI files:</p>
+
+<h4>Empty MoveDecorations Cleaner</h4>
+<p>Removes <code>MoveDecorations</code> events referencing non-existent decoration tags.</p>
+<pre>
+Example scenario:
+- You have MoveDecorations events for "deco1"
+- But no decoration exists with tag "deco1"
+- This tool removes these useless MoveDecorations events
+</pre>
+
+<h4>Unused Decoration Cleaner</h4>
+<p>Removes decoration events (AddDecoration, AddText, etc.) never referenced by other events.</p>
+<ul>
+  <li>Analyzes references from MoveDecorations, SetText, EmitParticle, etc.</li>
+  <li>Handles hitboxDecoTag recursive references</li>
+  <li>Supports dry-run mode to preview deletions</li>
+  <li>Auto-creates backups before modifications</li>
+</ul>
+
+<div class="tip">
+<strong>Best Practice:</strong> Always enable "Dry Run Only" first to see what will be deleted, then execute actual cleanup after confirmation.
+</div>
+
+<h3>4.2 VFX Maker</h3>
+<p>Create optimized level versions for video recording:</p>
+
+<table>
+  <tr><th>Mode</th><th>Purpose</th><th>Removes</th></tr>
+  <tr>
+    <td><strong>Foreground / Chart</strong></td>
+    <td>For gameplay charts</td>
+    <td>Background decorations, CustomBackground, HallOfMirrors</td>
+  </tr>
+  <tr>
+    <td><strong>Background / Recording</strong></td>
+    <td>For background-only recording</td>
+    <td>Gameplay events (SetPlanetRotation, ColorTrack, etc.), foreground decorations</td>
+  </tr>
+</table>
+
+<h4>Video VFX Pro</h4>
+<p>Smart filtering based on depth values and masking settings:</p>
+<ul>
+  <li><strong>Foreground Mode:</strong> Keeps negative-depth decorations, filters based on masking</li>
+  <li><strong>Background Mode:</strong> Keeps non-negative depth decorations</li>
+  <li>Intelligently handles Flash and SetFilterAdvanced events</li>
+  <li>Respects maskingType and maskingDepth settings</li>
+</ul>
+
+<h3>4.3 Preset Groups</h3>
+<p>Apply multiple presets simultaneously:</p>
+<ol>
+  <li>Select a preset group from the dropdown</li>
+  <li>Choose append mode (add to existing) or replace mode (clear first)</li>
+  <li>Preview shows all sub-presets and their item counts</li>
+  <li>All keywords added as main strings (top level)</li>
+</ol>
+
+<h2 id="keyboard-shortcuts">5. Keyboard Shortcuts</h2>
+
+<h3>File Operations</h3>
+<table>
+  <tr><th>Shortcut</th><th>Function</th><th>Scope</th></tr>
+  <tr><td><kbd>Ctrl+O</kbd></td><td>Select input file</td><td>Global</td></tr>
+  <tr><td><kbd>Ctrl+S</kbd></td><td>Select output directory</td><td>Global</td></tr>
+  <tr><td><kbd>Ctrl+Shift+S</kbd></td><td>Auto-fill output directory</td><td>Global</td></tr>
+</table>
+
+<h3>Processing Operations</h3>
+<table>
+  <tr><th>Shortcut</th><th>Function</th><th>Scope</th></tr>
+  <tr><td><kbd>Ctrl+P</kbd></td><td>Preview results</td><td>Global</td></tr>
+  <tr><td><kbd>Ctrl+Shift+P</kbd></td><td>Start processing</td><td>Global</td></tr>
+  <tr><td><kbd>Ctrl+Return</kbd></td><td>Add main keyword</td><td>Global</td></tr>
+  <tr><td><kbd>Shift+Return</kbd></td><td>Add sub keyword</td><td>Global</td></tr>
+</table>
+
+<h3>Edit Operations</h3>
+<table>
+  <tr><th>Shortcut</th><th>Function</th><th>Scope</th></tr>
+  <tr><td><kbd>Delete</kbd></td><td>Delete selected keyword</td><td>Tree focused</td></tr>
+  <tr><td><kbd>Ctrl+Delete</kbd></td><td>Clear all keywords</td><td>Global</td></tr>
+  <tr><td><kbd>Ctrl+F</kbd></td><td>Focus search box</td><td>Preview window</td></tr>
+</table>
+
+<h3>System Operations</h3>
+<table>
+  <tr><th>Shortcut</th><th>Function</th><th>Scope</th></tr>
+  <tr><td><kbd>F12</kbd></td><td>Toggle debug window</td><td>Global</td></tr>
+</table>
+
+<h2 id="presets">6. Using Presets</h2>
+
+<h3>Creating presets.json</h3>
+<p>Create a file named <code>presets.json</code> in the application directory:</p>
+
+<pre>
+{
+  "Common Events": {
+    "Rotation": ["SetSpeed", "Twirl"],
+    "Colors": ["ColorTrack", "RecolorTrack", "AnimateTrack"]
+  },
+  "Decorations": {
+    "All Decorations": ["AddDecoration", "AddText", "AddParticle", "AddObject"],
+    "Move Events": ["MoveDecorations", "MoveTrack"]
+  }
+}
+</pre>
+
+<h3>Applying Presets</h3>
+<ul>
+  <li><strong>Apply Preset (Main):</strong> Add preset values as top-level keywords</li>
+  <li><strong>Apply Preset (Sub):</strong> Add preset values as children of selected main keyword</li>
+  <li><strong>Apply Preset Group:</strong> Batch apply entire groups in Toolbox tab</li>
+</ul>
+
+<h2 id="preview">7. Preview Feature</h2>
+
+<p>The preview window shows detailed results before actual file modification:</p>
+
+<h3>Features</h3>
+<ul>
+  <li><strong>Side-by-side comparison:</strong> View original vs. processed content</li>
+  <li><strong>Search function:</strong> Find specific text with regex support</li>
+  <li><strong>Word wrap toggle:</strong> Switch between wrapped and unwrapped long lines</li>
+  <li><strong>Edit mode:</strong> Modify preview content before saving</li>
+  <li><strong>Import keywords:</strong> Add selected text to filter tree</li>
+  <li><strong>Save to file:</strong> Export preview as separate file</li>
+</ul>
+
+<h3>Settings</h3>
+<table>
+  <tr><th>Setting</th><th>Default</th><th>Description</th></tr>
+  <tr><td>Max Preview Lines</td><td>1000</td><td>Limit lines shown in preview</td></tr>
+  <tr><td>Max Preview Chars</td><td>50000</td><td>Limit characters shown in preview</td></tr>
+  <tr><td>Case-sensitive Search</td><td>No</td><td>Whether search is case-sensitive</td></tr>
+  <tr><td>Word Wrap</td><td>Yes</td><td>Whether long lines auto-wrap</td></tr>
+</table>
+
+<h2 id="advanced-tips">8. Advanced Tips</h2>
+
+<h3>Regex Patterns</h3>
+<p>Use regex mode for complex matching:</p>
+<pre>
+Example patterns:
+"eventType":\s*"SetSpeed"     - Match SetSpeed events (any whitespace)
+"floor":\s*(100|101|102)      - Match specific floor numbers
+"angle":\s*\d{3,}             - Match angles with 3+ digits
+</pre>
+
+<h3>Performance Optimization</h3>
+<ul>
+  <li><strong>Turbo Mode:</strong> Disables progress updates for large files (>10MB), 10x speed boost</li>
+  <li><strong>Batch Processing:</strong> Use preset groups to apply multiple filters in one operation</li>
+  <li><strong>Encoding Selection:</strong> Use UTF-8-SIG for ADOFAI files to handle BOM correctly</li>
+</ul>
+
+<h3>Handling Large Files</h3>
+<ol>
+  <li>Enable Turbo Mode for files >10MB</li>
+  <li>Use limited line preview to check settings</li>
+  <li>If memory issues occur, consider chunk processing</li>
+  <li>Enable "Save Log" to track processing history</li>
+</ol>
+
+<h2 id="troubleshooting">9. Troubleshooting</h2>
+
+<table>
+  <tr><th>Issue</th><th>Solution</th></tr>
+  <tr>
+    <td>"Input file is not a text file"</td>
+    <td>Ensure the file is not binary. ADOFAI files should be UTF-8 encoded text.</td>
+  </tr>
+  <tr>
+    <td>UnicodeDecodeError during processing</td>
+    <td>Try a different encoding (ADOFAI uses UTF-8-SIG) or use auto-detection.</td>
+  </tr>
+  <tr>
+    <td>Preview shows truncated content</td>
+    <td>Increase "Max Preview Lines/Chars" in preview settings.</td>
+  </tr>
+  <tr>
+    <td>Presets won't load</td>
+    <td>Check that presets.json is valid JSON and located in the application directory.</td>
+  </tr>
+  <tr>
+    <td>Toolbox cleanup finds no decorations</td>
+    <td>Ensure the file uses standard ADOFAI format with actions/decorations arrays.</td>
+  </tr>
+  <tr>
+    <td>Memory error with large files</td>
+    <td>Enable Turbo Mode or process in smaller chunks.</td>
+  </tr>
+  <tr>
+    <td>Theme won't apply</td>
+    <td>Some themes may require restart. Try switching twice or restart the app.</td>
+  </tr>
+</table>
+
+<h2 id="technical">10. Technical Details</h2>
+
+<h3>File Structure</h3>
+<p>ADOFAI files use JSON Lines format:</p>
+<pre>
+{ "pathData": "...", "settings": {...} }
+{ "floor": 1, "eventType": "SetSpeed", "speedType": "Bpm", "beatsPerMinute": 100 }
+{ "floor": 2, "eventType": "Twirl" }
+...
+</pre>
+
+<h3>Processing Logic</h3>
+<ul>
+  <li><strong>Line-by-line:</strong> Each line evaluated independently</li>
+  <li><strong>Regex caching:</strong> Compiled patterns cached for performance</li>
+  <li><strong>Memory efficient:</strong> Streaming processing for large files</li>
+  <li><strong>Thread-safe:</strong> Background processing doesn't block UI</li>
+</ul>
+
+<h3>Configuration Files</h3>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>adofai_ep_config.json</code></td><td>User preferences</td></tr>
+  <tr><td><code>adofai_ep_history.json</code></td><td>Processing history (last 10 operations)</td></tr>
+  <tr><td><code>presets.json</code></td><td>Custom filter presets</td></tr>
+  <tr><td><code>logs/</code></td><td>Debug log files (if enabled)</td></tr>
+</table>
+
+<div class="note">
+<strong>Support:</strong> For issues or feature suggestions, please refer to the project repository or community forums (if available).
+</div>
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>ADOFAI 事件处理器 - 使用说明</title>
+<style>
+  body{font-family:system-ui, -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif; margin:40px auto; max-width:900px; line-height:1.6; color:#333}
+  h1{color:#007acc; border-bottom:2px solid #007acc; padding-bottom:10px}
+  h2{color:#005a9e; margin-top:30px; border-left:4px solid #007acc; padding-left:10px}
+  h3{color:#444; margin-top:25px}
+  code{background:#f4f4f4; padding:2px 6px; border-radius:3px; font-family:Consolas, "Courier New", monospace; font-size:0.9em}
+  pre{background:#f8f8f8; padding:15px; border-radius:5px; overflow-x:auto; border-left:3px solid #007acc}
+  kbd{background:#eee; border:1px solid #ccc; border-radius:3px; padding:2px 6px; font-family:monospace; font-size:0.85em}
+  table{border-collapse:collapse; width:100%; margin:15px 0}
+  th,td{border:1px solid #ddd; padding:10px; text-align:left}
+  th{background:#007acc; color:white}
+  tr:nth-child(even){background:#f9f9f9}
+  .tip{background:#e7f3ff; border-left:4px solid #007acc; padding:12px; margin:15px 0; border-radius:0 5px 5px 0}
+  .warning{background:#fff3cd; border-left:4px solid #ffc107; padding:12px; margin:15px 0; border-radius:0 5px 5px 0}
+  .note{background:#d4edda; border-left:4px solid #28a745; padding:12px; margin:15px 0; border-radius:0 5px 5px 0}
+  ul,ol{margin:10px 0; padding-left:25px}
+  li{margin:5px 0}
+</style>
+</head>
+<body>
+<h1>ADOFAI 事件处理器 - 使用说明</h1>
+<p><strong>版本：</strong>4.4.0 | <strong>适配 ADOFAI：</strong>v2.9.8 | (一般可向下兼容)</p>
+
+<div class="tip">
+<strong>提示：</strong>本工具专为处理《冰与火之舞》(A Dance of Fire and Ice) 关卡文件设计，可高效地筛选、修改和清理事件数据。
+</div>
+
+<h2>目录</h2>
+<ol>
+  <li><a href="#basic-workflow">基本工作流程</a></li>
+  <li><a href="#interface-overview">界面概览</a></li>
+  <li><a href="#processing-modes">处理模式详解</a></li>
+  <li><a href="#toolbox">工具箱功能</a></li>
+  <li><a href="#keyboard-shortcuts">快捷键一览</a></li>
+  <li><a href="#presets">使用预设</a></li>
+  <li><a href="#preview">预览功能</a></li>
+  <li><a href="#advanced-tips">进阶技巧</a></li>
+  <li><a href="#troubleshooting">常见问题</a></li>
+  <li><a href="#technical">技术细节</a></li>
+</ol>
+
+<h2 id="basic-workflow">1. 基本工作流程</h2>
+
+<h3>详细步骤</h3>
+<ol>
+  <li><strong>选择输入文件</strong>：点击<kbd>浏览…</kbd>或将 <code>.adofai</code> / <code>.txt</code> 文件拖入窗口。
+    <ul>
+      <li>支持格式：<code>.adofai</code>、<code>.txt</code>、<code>.json</code></li>
+      <li>自动检测编码（UTF-8、UTF-8-SIG、GBK、Shift-JIS、ASCII）</li>
+    </ul>
+  </li>
+  <li><strong>设置输出目录</strong>：点击<kbd>自动填充</kbd>使用输入文件所在目录，或浏览选择其他位置。</li>
+  <li><strong>指定输出文件名</strong>：输入文件名（不含扩展名），留空则使用 <code>原文件名_new.adofai</code>。</li>
+  <li><strong>添加筛选条件</strong>：使用关键词树添加主关键字或子关键字（支持正则表达式）。
+    <ul>
+      <li><strong>主关键字</strong>：主要搜索条件（同一分支内为"或"逻辑）</li>
+      <li><strong>子关键字</strong>：附加条件（与主关键字为"与"逻辑）</li>
+    </ul>
+  </li>
+  <li><strong>选择处理模式</strong>：从6种模式中选择（详见<a href="#processing-modes">处理模式详解</a>）。</li>
+  <li><strong>开始处理</strong>：点击<kbd>开始处理</kbd>或按 <kbd>Ctrl+Shift+P</kbd>。</li>
+</ol>
+
+<div class="note">
+<strong>注意：</strong>如果输出文件已存在，工具会自动创建唯一文件名（如 <code>文件名(1).adofai</code>）。
+</div>
+
+<h2 id="interface-overview">2. 界面概览</h2>
+
+<h3>主标签页 - 事件处理</h3>
+<table>
+  <tr><th>组件</th><th>说明</th></tr>
+  <tr><td>语言选择器</td><td>切换简体中文、英文等支持的语言</td></tr>
+  <tr><td>主题选择器</td><td>选择23种视觉主题（宇宙、暗黑、赛博等）</td></tr>
+  <tr><td>编码下拉框</td><td>手动选择编码或使用自动检测</td></tr>
+  <tr><td>预设组合框</td><td>从 presets.json 加载预定义规则</td></tr>
+  <tr><td>关键词树</td><td>主/子关键字的可视化层级结构，带复选框</td></tr>
+  <tr><td>模式选择</td><td>选择筛选器应用到输入文件的方式</td></tr>
+  <tr><td>选项栏</td><td>正则表达式、忽略大小写、极速模式开关</td></tr>
+  <tr><td>替换文本框</td><td>修改/替换模式下的替换内容</td></tr>
+</table>
+
+<h3>工具箱标签页</h3>
+<p>工具箱提供针对 ADOFAI 文件的专用工具：</p>
+<ul>
+  <li><strong>智能清理</strong>：删除未使用的装饰物和空的移动事件</li>
+  <li><strong>VFX制作</strong>：生成用于视频录制的前景/背景版本</li>
+  <li><strong>预设组</strong>：批量应用多个预设</li>
+</ul>
+
+<h2 id="processing-modes">3. 处理模式详解</h2>
+
+<table>
+  <tr><th>模式</th><th>说明</th><th>使用场景</th></tr>
+  <tr>
+    <td><strong>删除包含任意关键词的行</strong></td>
+    <td>删除匹配至少一个主关键字的行（分支内"或"逻辑）</td>
+    <td>快速删除特定事件类型</td>
+  </tr>
+  <tr>
+    <td><strong>提取包含任意关键词的行</strong></td>
+    <td>仅保留匹配至少一个主关键字的行</td>
+    <td>分离特定事件用于分析</td>
+  </tr>
+  <tr>
+    <td><strong>删除包含所有关键词的行</strong></td>
+    <td>删除同时匹配所有主关键字及其子关键字的行</td>
+    <td>多条件精确删除</td>
+  </tr>
+  <tr>
+    <td><strong>提取包含所有关键词的行</strong></td>
+    <td>仅保留同时匹配所有主关键字及其子关键字的行</td>
+    <td>提取高度特定的事件</td>
+  </tr>
+  <tr>
+    <td><strong>修改包含任意关键词的行</strong></td>
+    <td>将匹配行的整行内容替换为指定文本</td>
+    <td>批量替换事件参数</td>
+  </tr>
+  <tr>
+    <td><strong>替换匹配行中的子串</strong></td>
+    <td>在匹配行中查找并替换文本（非整行替换）</td>
+    <td>更新特定值同时保留结构</td>
+  </tr>
+</table>
+
+<div class="warning">
+<strong>重要：</strong>使用子关键字时，它们与所属主关键字形成"与"逻辑。不同主关键字之间形成"或"逻辑。
+</div>
+
+<h2 id="toolbox">4. 工具箱功能</h2>
+
+<h3>4.1 智能清理</h3>
+<p>自动清理 ADOFAI 文件中的常见问题：</p>
+
+<h4>空 MoveDecorations 清理器</h4>
+<p>删除引用不存在装饰物标签的 <code>MoveDecorations</code> 事件。</p>
+<pre>
+示例场景：
+- 你有针对 "deco1" 的 MoveDecorations 事件
+- 但不存在标签为 "deco1" 的装饰物
+- 本工具会删除这些无用的 MoveDecorations 事件
+</pre>
+
+<h4>未使用装饰物清理器</h4>
+<p>删除从未被其他事件引用的装饰物事件（AddDecoration、AddText 等）。</p>
+<ul>
+  <li>分析来自 MoveDecorations、SetText、EmitParticle 等的引用</li>
+  <li>处理 hitboxDecoTag 递归引用</li>
+  <li>支持仅预览模式，先查看将被删除的内容</li>
+  <li>修改前自动创建备份</li>
+</ul>
+
+<div class="tip">
+<strong>最佳实践：</strong>始终先启用"仅预览"模式查看将被删除的内容，确认无误后再执行实际清理。
+</div>
+
+<h3>4.2 VFX制作</h3>
+<p>为视频录制创建优化版本的关卡：</p>
+
+<table>
+  <tr><th>模式</th><th>用途</th><th>删除内容</th></tr>
+  <tr>
+    <td><strong>前景 / 谱子</strong></td>
+    <td>用于游玩的谱面</td>
+    <td>背景装饰物、CustomBackground、HallOfMirrors</td>
+  </tr>
+  <tr>
+    <td><strong>背景 / 录制</strong></td>
+    <td>用于仅背景录制</td>
+    <td>游戏事件（SetPlanetRotation、ColorTrack 等）、前景装饰物</td>
+  </tr>
+</table>
+
+<h4>Video VFX Pro</h4>
+<p>基于深度值和遮罩设置的智能过滤：</p>
+<ul>
+  <li><strong>前景模式：</strong>保留负深度装饰物，根据遮罩设置过滤</li>
+  <li><strong>背景模式：</strong>保留非负深度装饰物</li>
+  <li>智能处理 Flash 和 SetFilterAdvanced 事件</li>
+  <li>尊重 maskingType 和 maskingDepth 设置</li>
+</ul>
+
+<h3>4.3 预设组</h3>
+<p>同时应用多个预设：</p>
+<ol>
+  <li>从下拉框选择预设组</li>
+  <li>选择追加模式（添加到现有）或替换模式（先清空）</li>
+  <li>预览显示所有子预设及其项目数量</li>
+  <li>所有关键字作为主串（顶层）添加</li>
+</ol>
+
+<h2 id="keyboard-shortcuts">5. 快捷键一览</h2>
+
+<h3>文件操作</h3>
+<table>
+  <tr><th>快捷键</th><th>功能</th><th>适用范围</th></tr>
+  <tr><td><kbd>Ctrl+O</kbd></td><td>选择输入文件</td><td>全局</td></tr>
+  <tr><td><kbd>Ctrl+S</kbd></td><td>选择输出目录</td><td>全局</td></tr>
+  <tr><td><kbd>Ctrl+Shift+S</kbd></td><td>自动填充输出目录</td><td>全局</td></tr>
+</table>
+
+<h3>处理操作</h3>
+<table>
+  <tr><th>快捷键</th><th>功能</th><th>适用范围</th></tr>
+  <tr><td><kbd>Ctrl+P</kbd></td><td>预览处理结果</td><td>全局</td></tr>
+  <tr><td><kbd>Ctrl+Shift+P</kbd></td><td>开始处理</td><td>全局</td></tr>
+  <tr><td><kbd>Ctrl+Return</kbd></td><td>添加主关键字</td><td>全局</td></tr>
+  <tr><td><kbd>Shift+Return</kbd></td><td>添加子关键字</td><td>全局</td></tr>
+</table>
+
+<h3>编辑操作</h3>
+<table>
+  <tr><th>快捷键</th><th>功能</th><th>适用范围</th></tr>
+  <tr><td><kbd>Delete</kbd></td><td>删除选中关键字</td><td>树形控件聚焦时</td></tr>
+  <tr><td><kbd>Ctrl+Delete</kbd></td><td>清空所有关键字</td><td>全局</td></tr>
+  <tr><td><kbd>Ctrl+F</kbd></td><td>聚焦搜索框</td><td>预览窗口</td></tr>
+</table>
+
+<h3>系统操作</h3>
+<table>
+  <tr><th>快捷键</th><th>功能</th><th>适用范围</th></tr>
+  <tr><td><kbd>F12</kbd></td><td>打开/关闭调试窗口</td><td>全局</td></tr>
+</table>
+
+<h2 id="presets">6. 使用预设</h2>
+
+<h3>创建 presets.json</h3>
+<p>在应用程序目录创建名为 <code>presets.json</code> 的文件：</p>
+
+<pre>
+{
+  "常用事件": {
+    "旋转": ["SetSpeed", "Twirl"],
+    "颜色": ["ColorTrack", "RecolorTrack", "AnimateTrack"]
+  },
+  "装饰物": {
+    "所有装饰": ["AddDecoration", "AddText", "AddParticle", "AddObject"],
+    "移动事件": ["MoveDecorations", "MoveTrack"]
+  }
+}
+</pre>
+
+<h3>应用预设</h3>
+<ul>
+  <li><strong>应用预设（主串）：</strong>将预设值添加为顶层关键字</li>
+  <li><strong>应用预设（子串）：</strong>将预设值添加为选中主关键字的子项</li>
+  <li><strong>应用预设组：</strong>在工具箱标签页批量应用整个组</li>
+</ul>
+
+<h2 id="preview">7. 预览功能</h2>
+
+<p>在实际修改文件前，预览窗口提供详细的处理结果：</p>
+
+<h3>功能特性</h3>
+<ul>
+  <li><strong>并排对比：</strong>查看原始内容与处理后内容</li>
+  <li><strong>搜索功能：</strong>查找特定文本，支持正则表达式</li>
+  <li><strong>自动换行切换：</strong>在长行换行和不换行之间切换</li>
+  <li><strong>编辑模式：</strong>保存前修改预览内容</li>
+  <li><strong>导入关键字：</strong>选中预览中的文本添加到筛选树</li>
+  <li><strong>保存到文件：</strong>将预览导出为单独文件</li>
+</ul>
+
+<h3>设置选项</h3>
+<table>
+  <tr><th>设置项</th><th>默认值</th><th>说明</th></tr>
+  <tr><td>最大预览行数</td><td>1000</td><td>限制预览显示的行数</td></tr>
+  <tr><td>最大预览字符数</td><td>50000</td><td>限制预览显示的字符数</td></tr>
+  <tr><td>区分大小写搜索</td><td>否</td><td>搜索时是否区分大小写</td></tr>
+  <tr><td>自动换行</td><td>是</td><td>长行是否自动换行</td></tr>
+</table>
+
+<h2 id="advanced-tips">8. 进阶技巧</h2>
+
+<h3>正则表达式模式</h3>
+<p>使用正则模式进行复杂匹配：</p>
+<pre>
+示例模式：
+"eventType":\s*"SetSpeed"     - 匹配 SetSpeed 事件（任意空格）
+"floor":\s*(100|101|102)      - 匹配特定楼层号
+"angle":\s*\d{3,}             - 匹配3位及以上数字的角度
+</pre>
+
+<h3>性能优化</h3>
+<ul>
+  <li><strong>极速模式：</strong>对大文件（>10MB）禁用进度更新，处理速度提升10倍</li>
+  <li><strong>批量处理：</strong>使用预设组在一次操作中应用多个筛选器</li>
+  <li><strong>编码选择：</strong>ADOFAI 文件使用 UTF-8-SIG 确保正确处理 BOM</li>
+</ul>
+
+<h3>处理大文件</h3>
+<ol>
+  <li>文件大于10MB时启用极速模式</li>
+  <li>使用有限行数预览检查设置</li>
+  <li>如遇内存问题，考虑分块处理</li>
+  <li>启用"保存日志"跟踪处理历史</li>
+</ol>
+
+<h2 id="troubleshooting">9. 常见问题</h2>
+
+<table>
+  <tr><th>问题</th><th>解决方案</th></tr>
+  <tr>
+    <td>"输入文件不是文本文件"</td>
+    <td>确保文件不是二进制格式。ADOFAI 文件应为 UTF-8 编码的文本。</td>
+  </tr>
+  <tr>
+    <td>处理时出现 UnicodeDecodeError</td>
+    <td>尝试其他编码（ADOFAI 用 UTF-8-SIG）或使用自动检测。</td>
+  </tr>
+  <tr>
+    <td>预览显示内容被截断</td>
+    <td>在预览设置中增加"最大预览行数/字符数"。</td>
+  </tr>
+  <tr>
+    <td>预设无法加载</td>
+    <td>检查 presets.json 是否为有效 JSON 且位于应用程序目录。</td>
+  </tr>
+  <tr>
+    <td>工具箱清理找不到装饰物</td>
+    <td>确保文件使用标准 ADOFAI 格式，包含 actions/decorations 数组。</td>
+  </tr>
+  <tr>
+    <td>大文件出现内存错误</td>
+    <td>启用极速模式或分小块处理。</td>
+  </tr>
+  <tr>
+    <td>主题无法应用</td>
+    <td>某些主题可能需要重启。尝试切换两次或重启应用。</td>
+  </tr>
+</table>
+
+<h2 id="technical">10. 技术细节</h2>
+
+<h3>文件结构</h3>
+<p>ADOFAI 文件采用 JSON Lines 格式：</p>
+<pre>
+{ "pathData": "...", "settings": {...} }
+{ "floor": 1, "eventType": "SetSpeed", "speedType": "Bpm", "beatsPerMinute": 100 }
+{ "floor": 2, "eventType": "Twirl" }
+...
+</pre>
+
+<h3>处理逻辑</h3>
+<ul>
+  <li><strong>逐行处理：</strong>每行独立评估</li>
+  <li><strong>正则缓存：</strong>编译的模式会被缓存以提高性能</li>
+  <li><strong>内存高效：</strong>大文件使用流式处理</li>
+  <li><strong>线程安全：</strong>后台处理不阻塞界面</li>
+</ul>
+
+<h3>配置文件</h3>
+<table>
+  <tr><th>文件</th><th>用途</th></tr>
+  <tr><td><code>adofai_ep_config.json</code></td><td>用户偏好设置</td></tr>
+  <tr><td><code>adofai_ep_history.json</code></td><td>处理历史（最近10次操作）</td></tr>
+  <tr><td><code>presets.json</code></td><td>自定义筛选预设</td></tr>
+  <tr><td><code>logs/</code></td><td>调试日志文件（如启用）</td></tr>
+</table>
+
+<div class="note">
+<strong>支持：</strong>如有问题或功能建议，请参考项目仓库或社区论坛（如果有）。
+</div>
+
+</body>
+</html>

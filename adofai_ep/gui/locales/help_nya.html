@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>ADOFAI 喵喵处理器 - 猫咪使用手册</title>
+<style>
+  body{font-family:system-ui, -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif; margin:40px auto; max-width:900px; line-height:1.6; color:#333; background:#fffaf0}
+  h1{color:#ff6b6b; border-bottom:3px dashed #ff6b6b; padding-bottom:10px}
+  h2{color:#ff8e53; margin-top:30px; border-left:4px solid #ffd93d; padding-left:10px; background:#fff5e6; border-radius:0 10px 10px 0}
+  h3{color:#6bcf7f; margin-top:25px}
+  code{background:#ffe4e1; padding:2px 6px; border-radius:3px; font-family:Consolas, "Courier New", monospace; font-size:0.9em; color:#d63384}
+  pre{background:#fff8dc; padding:15px; border-radius:10px; overflow-x:auto; border:2px solid #ffd93d; border-left:5px solid #ff6b6b}
+  kbd{background:#ffe4e1; border:2px solid #ffb6c1; border-radius:5px; padding:2px 6px; font-family:monospace; font-size:0.85em; color:#d63384}
+  table{border-collapse:collapse; width:100%; margin:15px 0; border-radius:10px; overflow:hidden}
+  th,td{border:1px solid #ffd93d; padding:10px; text-align:left}
+  th{background:linear-gradient(135deg, #ff6b6b, #ff8e53); color:white}
+  tr:nth-child(even){background:#fffaf0}
+  tr:nth-child(odd){background:#ffffff}
+  .tip{background:#e7f3ff; border-left:4px solid #4dabf7; padding:12px; margin:15px 0; border-radius:0 10px 10px 0}
+  .warning{background:#fff3cd; border-left:4px solid #ffc107; padding:12px; margin:15px 0; border-radius:0 10px 10px 0}
+  .note{background:#d4edda; border-left:4px solid #69db7c; padding:12px; margin:15px 0; border-radius:0 10px 10px 0}
+  ul,ol{margin:10px 0; padding-left:25px}
+  li{margin:5px 0}
+  .paw{padding-left:20px; position:relative}
+  .paw::before{content:"🐾"; position:absolute; left:0}
+  .fish{color:#ff6b6b; font-weight:bold}
+  .catnip{color:#69db7c; font-weight:bold}
+</style>
+</head>
+<body>
+<h1>🐱 ADOFAI 喵喵处理器 - 猫咪使用手册 🐾</h1>
+<p><strong>版本：</strong>4.4.0（猫爪版） | <strong>适配 ADOFAI：</strong>v2.9.8 | （一般可向下兼容，喵～）</p>
+
+<div class="tip">
+<strong>🐾 猫爪提示：</strong>本工具专为《冰与火之舞》(A Dance of Fire and Ice) 关卡文件设计，让勤劳的小猫咪帮你高效地抓老鼠、整理猫窝！
+</div>
+
+<h2>🐟 小鱼干目录</h2>
+<ol>
+  <li><a href="#basic-workflow">猫咪基本工作流程</a></li>
+  <li><a href="#interface-overview">猫窝界面概览</a></li>
+  <li><a href="#processing-modes">抓老鼠模式详解</a></li>
+  <li><a href="#toolbox">猫咪工具箱</a></li>
+  <li><a href="#keyboard-shortcuts">猫爪快捷键</a></li>
+  <li><a href="#presets">使用猫罐头（预设）</a></li>
+  <li><a href="#preview">闻一闻（预览功能）</a></li>
+  <li><a href="#advanced-tips">聪明猫咪进阶技巧</a></li>
+  <li><a href="#troubleshooting">猫咪常见问题</a></li>
+  <li><a href="#technical">猫语技术细节</a></li>
+</ol>
+
+<h2 id="basic-workflow">1. 🎯 猫咪基本工作流程</h2>
+
+<h3>🐾 详细猫步</h3>
+<ol>
+  <li class="paw"><strong>挑选要抓的文件：</strong>点击<kbd>四处逛逛…</kbd>或将 <code>.adofai</code> / <code>.txt</code> 文件拖进猫窝窗口。
+    <ul>
+      <li>🐟 支持格式：<code>.adofai</code>、<code>.txt</code>、<code>.json</code></li>
+      <li>👃 自动闻闻编码（UTF-8、UTF-8-SIG、GBK、Shift-JIS、ASCII）</li>
+    </ul>
+  </li>
+  <li class="paw"><strong>设置放鱼干的篮子：</strong>点击<kbd>自动埋便便</kbd>使用输入文件所在篮子，或四处逛逛选其他位置。</li>
+  <li class="paw"><strong>给小鱼干取名：</strong>输入文件名（不要刺哦），留空则使用 <code>原文件名_new.adofai</code>。</li>
+  <li class="paw"><strong>添加猫薄荷条件：</strong>用关键词树添加<span class="catnip">大猫薄荷</span>或<span class="catnip">小猫薄荷</span>（支持神奇猫抓板正则表达式）。
+    <ul>
+      <li><strong>🐱 大猫薄荷：</strong>主要抓老鼠条件（同一猫窝内是"或"逻辑）</li>
+      <li><strong>🐱 小猫薄荷：</strong>附加条件（与大猫薄荷是"与"逻辑）</li>
+    </ul>
+  </li>
+  <li class="paw"><strong>选择扑击模式：</strong>从6种抓老鼠模式中选择（详见<a href="#processing-modes">抓老鼠模式详解</a>）。</li>
+  <li class="paw"><strong>开始扑击！</strong>点击<kbd>开始扑击！</kbd>或按 <kbd>Ctrl+Shift+P</kbd>。</li>
+</ol>
+
+<div class="note">
+<strong>🐾 注意：</strong>如果输出鱼干已存在，工具会自动创建唯一鱼干名（如 <code>鱼干(1).adofai</code>），不会覆盖原来的宝藏！
+</div>
+
+<h2 id="interface-overview">2. 🏠 猫窝界面概览</h2>
+
+<h3>🐱 主猫窝 - 抓老鼠中心</h3>
+<table>
+  <tr><th>猫咪组件</th><th>说明</th></tr>
+  <tr><td>喵喵语选择器</td><td>切换简体中文、英文、喵喵语等猫语</td></tr>
+  <tr><td>毛色主题选择器</td><td>选择23种漂亮毛色（橘猫、黑猫、机器猫等）</td></tr>
+  <tr><td>猫语编码下拉框</td><td>手动选择编码或使用自动闻闻</td></tr>
+  <tr><td>猫罐头组合框</td><td>从 presets.json 加载预定义抓老鼠规则</td></tr>
+  <tr><td>猫薄荷树</td><td>大/小猫薄荷的可视化猫爬架，带复选框</td></tr>
+  <tr><td>扑击模式选择</td><td>选择猫咪扑击输入文件的方式</td></tr>
+  <tr><td>猫咪选项栏</td><td>神奇猫抓板、不挑大小写、飞毛腿模式开关</td></tr>
+  <tr><td>换猫毛文本框</td><td>修改/替换模式下的新猫毛内容</td></tr>
+</table>
+
+<h3>🧰 猫咪工具箱</h3>
+<p>工具箱提供专门针对 ADOFAI 鱼干的猫咪工具：</p>
+<ul>
+  <li class="paw"><strong>🧹 聪明猫猫大扫除：</strong>清理不要的装饰球和空的猫爪印</li>
+  <li class="paw"><strong>✨ 魔法猫爪特效：</strong>生成用于视频录制的主猫/后猫版本</li>
+  <li class="paw"><strong>🏠 猫猫预设小窝：</strong>批量应用多个猫罐头</li>
+</ul>
+
+<h2 id="processing-modes">3. 🎯 抓老鼠模式详解</h2>
+
+<table>
+  <tr><th>扑击模式</th><th>说明</th><th>猫咪使用场景</th></tr>
+  <tr>
+    <td><strong>🗑️ 丢掉有猫薄荷的行</strong></td>
+    <td>丢掉匹配至少一个大猫薄荷的行（猫窝内"或"逻辑）</td>
+    <td>快速丢掉特定老鼠类型</td>
+  </tr>
+  <tr>
+    <td><strong>🐟 只留带猫薄荷的行</strong></td>
+    <td>仅保留匹配至少一个大猫薄荷的行</td>
+    <td>分离特定老鼠用于分析</td>
+  </tr>
+  <tr>
+    <td><strong>🚫 丢掉全是猫薄荷的行</strong></td>
+    <td>丢掉同时匹配所有大猫薄荷及其小猫薄荷的行</td>
+    <td>多条件精确丢掉</td>
+  </tr>
+  <tr>
+    <td><strong>✅ 只留全是猫薄荷的行</strong></td>
+    <td>仅保留同时匹配所有大猫薄荷及其小猫薄荷的行</td>
+    <td>提取高度特定的老鼠</td>
+  </tr>
+  <tr>
+    <td><strong>🎨 修改带猫薄荷的行</strong></td>
+    <td>将匹配行的整行内容换成指定猫毛</td>
+    <td>批量替换老鼠参数</td>
+  </tr>
+  <tr>
+    <td><strong>🔄 换掉猫薄荷里的字</strong></td>
+    <td>在匹配行中查找并替换猫毛（非整行替换）</td>
+    <td>更新特定值同时保留猫窝结构</td>
+  </tr>
+</table>
+
+<div class="warning">
+<strong>🐱 重要猫胡子警告：</strong>使用小猫薄荷时，它们与所属大猫薄荷形成"与"逻辑。不同大猫薄荷之间形成"或"逻辑。记住：小猫听大猫的话！
+</div>
+
+<h2 id="toolbox">4. 🧰 猫咪工具箱</h2>
+
+<h3>4.1 🧹 聪明猫猫大扫除</h3>
+<p>自动清理 ADOFAI 鱼干中的常见问题，让猫窝保持整洁：</p>
+
+<h4>🐾 清理空猫爪印 (EmptyMoveCleaner)</h4>
+<p>删除引用不存在装饰球标签的 <code>MoveDecorations</code> 事件。</p>
+<pre>
+🐱 示例场景：
+- 你有针对 "deco1" 的 MoveDecorations 猫爪印
+- 但不存在标签为 "deco1" 的装饰球
+- 本工具会擦掉这些没用的猫爪印
+</pre>
+
+<h4>🎾 清理不要的装饰球 (UnusedDecorationCleaner)</h4>
+<p>删除从未被其他事件引用的装饰球事件（AddDecoration、AddText 等）。</p>
+<ul>
+  <li class="paw">分析来自 MoveDecorations、SetText、EmitParticle 等的引用</li>
+  <li class="paw">处理 hitboxDecoTag 递归引用（猫球套猫球）</li>
+  <li class="paw">支持只看看不动手模式，先预览要丢掉的内容</li>
+  <li class="paw">修改前自动藏好鱼干备份</li>
+</ul>
+
+<div class="tip">
+<strong>🐾 最佳猫咪实践：</strong>始终先启用"只看看不动手（乖猫咪）"模式查看将要丢掉的内容，确认无误后再执行真正的大扫除！
+</div>
+
+<h3>4.2 ✨ 魔法猫爪特效 (VFX制作)</h3>
+<p>为视频录制创建优化版本的鱼干关卡：</p>
+
+<table>
+  <tr><th>制作模式</th><th>猫咪用途</th><th>会丢掉什么</th></tr>
+  <tr>
+    <td><strong>🐱 主猫 / 谱子 (Foreground)</strong></td>
+    <td>用于游玩的谱面</td>
+    <td>后猫装饰球、CustomBackground、HallOfMirrors</td>
+  </tr>
+  <tr>
+    <td><strong>🐱 后猫 / 录制 (Background)</strong></td>
+    <td>用于仅后猫录制</td>
+    <td>游戏事件（SetPlanetRotation、ColorTrack 等）、主猫装饰球</td>
+  </tr>
+</table>
+
+<h4>🌟 超级魔法猫爪 (Video VFX Pro)</h4>
+<p>基于深度值和遮罩设置的智能猫咪过滤：</p>
+<ul>
+  <li class="paw"><strong>🐱 主猫模式：</strong>保留负深度装饰球，根据遮罩设置过滤</li>
+  <li class="paw"><strong>🐱 后猫模式：</strong>保留非负深度装饰球</li>
+  <li class="paw">智能处理 Flash 和 SetFilterAdvanced 事件</li>
+  <li class="paw">尊重 maskingType 和 maskingDepth 设置（猫咪很懂礼貌）</li>
+</ul>
+
+<h3>4.3 🏠 猫猫预设小窝</h3>
+<p>同时应用多个猫罐头（预设组）：</p>
+<ol>
+  <li>从下拉框选择豪华猫窝（预设组）</li>
+  <li>选择追加模式（挂到现有猫爬架）或替换模式（换掉整个猫爬架）</li>
+  <li>预览显示所有小罐头及其小鱼干数量</li>
+  <li>所有猫薄荷作为大猫（顶层）添加</li>
+</ol>
+
+<h2 id="keyboard-shortcuts">5. ⌨️ 猫爪快捷键一览</h2>
+
+<h3>🐟 鱼干操作</h3>
+<table>
+  <tr><th>猫爪快捷键</th><th>猫咪功能</th><th>适用范围</th></tr>
+  <tr><td><kbd>Ctrl+O</kbd></td><td>挑选要抓的文件</td><td>全猫窝</td></tr>
+  <tr><td><kbd>Ctrl+S</kbd></td><td>选择放鱼干的篮子</td><td>全猫窝</td></tr>
+  <tr><td><kbd>Ctrl+Shift+S</kbd></td><td>自动埋便便填充篮子</td><td>全猫窝</td></tr>
+</table>
+
+<h3>🎯 扑击操作</h3>
+<table>
+  <tr><th>猫爪快捷键</th><th>猫咪功能</th><th>适用范围</th></tr>
+  <tr><td><kbd>Ctrl+P</kbd></td><td>先闻一闻处理结果</td><td>全猫窝</td></tr>
+  <tr><td><kbd>Ctrl+Shift+P</kbd></td><td>开始扑击！</td><td>全猫窝</td></tr>
+  <tr><td><kbd>Ctrl+Return</kbd></td><td>添加大猫薄荷</td><td>全猫窝</td></tr>
+  <tr><td><kbd>Shift+Return</kbd></td><td>添加小猫薄荷</td><td>全猫窝</td></tr>
+</table>
+
+<h3>✏️ 编辑操作</h3>
+<table>
+  <tr><th>猫爪快捷键</th><th>猫咪功能</th><th>适用范围</th></tr>
+  <tr><td><kbd>Delete</kbd></td><td>丢掉选中的猫薄荷</td><td>猫爬架聚焦时</td></tr>
+  <tr><td><kbd>Ctrl+Delete</kbd></td><td>舔干净所有猫薄荷</td><td>全猫窝</td></tr>
+  <tr><td><kbd>Ctrl+F</kbd></td><td>聚焦搜索猫毛框</td><td>闻一闻窗口</td></tr>
+</table>
+
+<h3>⚙️ 系统操作</h3>
+<table>
+  <tr><th>猫爪快捷键</th><th>猫咪功能</th><th>适用范围</th></tr>
+  <tr><td><kbd>F12</kbd></td><td>打开/关闭抓虫子窗口</td><td>全猫窝</td></tr>
+</table>
+
+<h2 id="presets">6. 🥫 使用猫罐头（预设）</h2>
+
+<h3>🐱 创建 presets.json（猫罐头仓库）</h3>
+<p>在应用程序目录创建名为 <code>presets.json</code> 的猫罐头仓库：</p>
+
+<pre>
+{
+  "常用老鼠": {
+    "旋转球": ["SetSpeed", "Twirl"],
+    "颜色球": ["ColorTrack", "RecolorTrack", "AnimateTrack"]
+  },
+  "装饰球": {
+    "所有装饰球": ["AddDecoration", "AddText", "AddParticle", "AddObject"],
+    "移动猫爪": ["MoveDecorations", "MoveTrack"]
+  }
+}
+</pre>
+
+<h3>🐾 应用猫罐头</h3>
+<ul>
+  <li class="paw"><strong>🐱 大猫咪开吃：</strong>将猫罐头值添加为顶层猫薄荷</li>
+  <li class="paw"><strong>🐱 小猫咪开吃：</strong>将猫罐头值添加为选中的大猫薄荷的子项</li>
+  <li class="paw"><strong>🐱 猫猫大餐开动：</strong>在猫咪工具箱标签页批量应用整个豪华猫窝</li>
+</ul>
+
+<h2 id="preview">7. 👃 闻一闻（预览功能）</h2>
+
+<p>在真正修改鱼干前，闻一闻窗口提供详细的处理结果预览：</p>
+
+<h3>🐱 猫咪功能特性</h3>
+<ul>
+  <li class="paw"><strong>并排对比：</strong>查看原始鱼干 vs. 处理后鱼干</li>
+  <li class="paw"><strong>搜索猫毛：</strong>查找特定猫毛，支持神奇猫抓板</li>
+  <li class="paw"><strong>自动舔毛切换：</strong>在长毛换行和不换行之间切换</li>
+  <li class="paw"><strong>编辑模式：</strong>保存前修改闻一闻内容</li>
+  <li class="paw"><strong>导入猫薄荷：</strong>选中闻一闻中的猫毛添加到猫爬架</li>
+  <li class="paw"><strong>保存到鱼干：</strong>将闻一闻导出为单独鱼干</li>
+</ul>
+
+<h3>⚙️ 猫咪设置选项</h3>
+<table>
+  <tr><th>设置项</th><th>默认猫值</th><th>说明</th></tr>
+  <tr><td>最大闻一闻行数</td><td>1000</td><td>限制闻一闻显示的行数</td></tr>
+  <tr><td>最大闻一闻猫毛数</td><td>50000</td><td>限制闻一闻显示的猫毛数</td></tr>
+  <tr><td>区分大小写搜索</td><td>否</td><td>搜索时是否区分大小猫</td></tr>
+  <tr><td>自动舔毛</td><td>是</td><td>长毛是否自动舔顺</td></tr>
+</table>
+
+<h2 id="advanced-tips">8. 🎓 聪明猫咪进阶技巧</h2>
+
+<h3>🔮 神奇猫抓板模式（正则表达式）</h3>
+<p>使用神奇猫抓板进行复杂匹配：</p>
+<pre>
+🐱 示例猫抓板：
+"eventType":\s*"SetSpeed"     - 匹配 SetSpeed 老鼠（任意猫步空格）
+"floor":\s*(100|101|102)      - 匹配特定楼层号
+"angle":\s*\d{3,}             - 匹配3位及以上数字的角度
+</pre>
+
+<h3>⚡ 飞毛腿优化（性能优化）</h3>
+<ul>
+  <li class="paw"><strong>🚀 飞毛腿模式：</strong>对大鱼干（>10MB）禁用进度更新，扑击速度提升10倍！</li>
+  <li class="paw"><strong>🐟 批量处理：</strong>使用豪华猫窝在一次扑击中应用多个猫薄荷</li>
+  <li class="paw"><strong>🌐 编码选择：</strong>ADOFAI 鱼干使用 UTF-8-SIG 确保正确处理 BOM</li>
+</ul>
+
+<h3>🐋 处理大鱼干</h3>
+<ol>
+  <li>鱼干大于10MB时启用飞毛腿模式</li>
+  <li>使用有限行数闻一闻检查设置</li>
+  <li>如遇内存问题，考虑分块扑击</li>
+  <li>启用"保存猫爪印"跟踪扑击历史</li>
+</ol>
+
+<h2 id="troubleshooting">9. 🆘 猫咪常见问题</h2>
+
+<table>
+  <tr><th>问题</th><th>猫咪解决方案</th></tr>
+  <tr>
+    <td>🚫 "这个文件不能吃（不是文本）"</td>
+    <td>确保鱼干不是二进制格式。ADOFAI 鱼干应为 UTF-8 编码的文本。</td>
+  </tr>
+  <tr>
+    <td>😵 处理时出现 UnicodeDecodeError</td>
+    <td>试试其他猫语编码（ADOFAI 用 UTF-8-SIG）或使用自动闻闻。</td>
+  </tr>
+  <tr>
+    <td>✂️ 闻一闻显示内容被剪掉</td>
+    <td>在闻一闻设置中增加"最大闻一闻行数/猫毛数"。</td>
+  </tr>
+  <tr>
+    <td>🥫 猫罐头无法加载</td>
+    <td>检查 presets.json 是否为有效 JSON 且位于应用程序目录。</td>
+  </tr>
+  <tr>
+    <td>🎾 工具箱清理找不到装饰球</td>
+    <td>确保鱼干使用标准 ADOFAI 格式，包含 actions/decorations 猫爬架。</td>
+  </tr>
+  <tr>
+    <td>💥 大鱼干出现内存错误</td>
+    <td>启用飞毛腿模式或分小块扑击。</td>
+  </tr>
+  <tr>
+    <td>🎨 毛色主题无法应用</td>
+    <td>某些毛色可能需要重启猫窝。试试切换两次或重启应用。</td>
+  </tr>
+</table>
+
+<h2 id="technical">10. 🔧 猫语技术细节</h2>
+
+<h3>📦 鱼干结构</h3>
+<p>ADOFAI 鱼干采用 JSON Lines 猫语格式：</p>
+<pre>
+{ "pathData": "...", "settings": {...} }
+{ "floor": 1, "eventType": "SetSpeed", "speedType": "Bpm", "beatsPerMinute": 100 }
+{ "floor": 2, "eventType": "Twirl" }
+...
+</pre>
+
+<h3>🧠 猫咪处理逻辑</h3>
+<ul>
+  <li class="paw"><strong>逐行扑击：</strong>每行独立评估（一只老鼠一只老鼠抓）</li>
+  <li class="paw"><strong>猫抓板缓存：</strong>编译的猫抓板会被缓存以提高扑击速度</li>
+  <li class="paw"><strong>内存高效：</strong>大鱼干使用流式扑击处理</li>
+  <li class="paw"><strong>线程安全：</strong>后台扑击不阻塞猫窝界面</li>
+</ul>
+
+<h3>📁 猫咪配置文件</h3>
+<table>
+  <tr><th>文件</th><th>猫咪用途</th></tr>
+  <tr><td><code>adofai_ep_config.json</code></td><td>猫咪偏好设置（喜欢什么鱼干）</td></tr>
+  <tr><td><code>adofai_ep_history.json</code></td><td>扑击历史（最近10次抓老鼠记录）</td></tr>
+  <tr><td><code>presets.json</code></td><td>自定义猫薄荷预设</td></tr>
+  <tr><td><code>logs/</code></td><td>抓虫子日志文件（如启用）</td></tr>
+</table>
+
+<div class="note">
+<strong>🐾 猫咪支持：</strong>如有问题或想要更多小鱼干功能，请参考项目仓库或猫咪社区论坛（如果有的话）。喵呜～🐱
+</div>
+
+<div style="text-align:center; margin-top:40px; padding:20px; background:linear-gradient(135deg, #ffe4e1, #fff8dc); border-radius:15px;">
+  <p style="font-size:1.2em; color:#ff6b6b; margin:0;">
+    🐱 感谢使用 ADOFAI 喵喵处理器！愿你每天都有满满的小鱼干！ 🐟<br>
+    <span style="font-size:0.9em; color:#888;">Made with 💖 and 🐾 by Cat Lovers</span>
+  </p>
+</div>
+
+</body>
+</html>
