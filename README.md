@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ADOFAI Event Processor v4.4.0
 
 冰与火之舞（A Dance of Fire and Ice）事件处理工具

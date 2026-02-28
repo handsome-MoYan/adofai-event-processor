@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "adofai-event-processor"
 version = "4.4.0"
-description = "ADOFAI Event Processor - 冰与火之舞事件处理工具"
+description = "ADOFAI Event Processor - ADOFAI事件处理工具"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
