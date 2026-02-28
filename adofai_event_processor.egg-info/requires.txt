@@ -1,0 +1,7 @@
+ttkbootstrap>=1.10.0
+tkinterdnd2>=0.3.0
+chardet>=5.0.0
+
+[dev]
+pyinstaller>=6.0
+build>=1.0

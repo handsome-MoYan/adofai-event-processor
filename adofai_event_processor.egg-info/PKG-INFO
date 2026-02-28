@@ -1,3 +1,29 @@
+Metadata-Version: 2.4
+Name: adofai-event-processor
+Version: 4.4.0
+Summary: ADOFAI Event Processor - 冰与火之舞事件处理工具
+Author-email: NeoMoyelle <handsomemoyan@outlook.com>
+License: MIT
+Project-URL: Homepage, https://github.com/handsome-MoYan/adofai-event-processor
+Project-URL: Repository, https://github.com/handsome-MoYan/adofai-event-processor
+Project-URL: Issues, https://github.com/handsome-MoYan/adofai-event-processor/issues
+Keywords: adofai,game,editor,tool
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Games/Entertainment
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: License
+Requires-Dist: ttkbootstrap>=1.10.0
+Requires-Dist: tkinterdnd2>=0.3.0
+Requires-Dist: chardet>=5.0.0
+Provides-Extra: dev
+Requires-Dist: pyinstaller>=6.0; extra == "dev"
+Requires-Dist: build>=1.0; extra == "dev"
+Dynamic: license-file
+
 # ADOFAI Event Processor v4.4.0
 
 冰与火之舞（A Dance of Fire and Ice）事件处理工具

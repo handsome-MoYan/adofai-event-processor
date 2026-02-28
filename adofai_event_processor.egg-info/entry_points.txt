@@ -1,0 +1,2 @@
+[console_scripts]
+adofai-ep = adofai_ep.main:start_gui
